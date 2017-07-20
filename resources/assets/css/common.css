@@ -1,0 +1,73 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: table;
+    font-weight: 100;
+    font-family: 'Lato';
+}
+
+.container {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.content {
+    text-align: center;
+    display: inline-block;
+}
+
+.title {
+    font-size: 96px;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height:80px;
+    border-bottom: 2px solid #333;
+}
+
+.header .brand{
+    font-size: 70px;
+    font-weight: 900;
+    padding-left: 30px;
+    float: left;
+}
+
+.header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+    padding-right: 30px;
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+.header ul li {
+    float: left;
+    margin-right: 20px;
+}
+
+.header ul li a {
+    display: block;
+    color: #111;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.header ul li:hover {
+    background-color: #aaa;
+}
+
+.header ul li.active{
+    border: 2px solid #aaa;
+}
