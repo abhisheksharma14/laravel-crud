@@ -1053,7 +1053,8 @@ class Uploader extends Controller
     }
 
     protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
-            $index = null, $content_range = null) {
+            $index = null, $content_range = null, $hue=0) {
+
         $file = new \stdClass();
         $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
             $index, $content_range);
@@ -1103,7 +1104,7 @@ class Uploader extends Controller
             $this->set_additional_file_properties($file);
         }
         if (isset($file->error)) {
-            $this->save_to_database($file->name, 50);
+            $this->save_to_database($file->name, $hue);
         }
         return $file;
     }
@@ -1328,6 +1329,8 @@ class Uploader extends Controller
             preg_split('/[^0-9]+/', $content_range_header) : null;
         $size =  $content_range ? $content_range[3] : null;
         $files = array();
+        $hue = $_REQUEST['hue'];
+
         if ($upload) {
             if (is_array($upload['tmp_name'])) {
                 // param_name is an array identifier like "files[]",
@@ -1340,7 +1343,8 @@ class Uploader extends Controller
                         $upload['type'][$index],
                         $upload['error'][$index],
                         $index,
-                        $content_range
+                        $content_range,
+                        $hue
                     );
                 }
             } else {
@@ -1356,7 +1360,8 @@ class Uploader extends Controller
                             $upload['type'] : $this->get_server_var('CONTENT_TYPE'),
                     isset($upload['error']) ? $upload['error'] : null,
                     null,
-                    $content_range
+                    $content_range,
+                    $hue
                 );
             }
         }

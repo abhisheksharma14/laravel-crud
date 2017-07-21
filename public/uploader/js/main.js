@@ -39,16 +39,29 @@ $(function () {
         var reader = new FileReader();
         reader.readAsDataURL(data.files[0]);
         reader.data = data;
-        reader.file = data.files[0];
+        reader.file = data.files[0];  
 
         reader.onload = function (_file) {
             var image = new Image();
-
             image.src = _file.target.result;
             image.file = this.file;
             image.data = this.data;
             image.onload = function () {
-                var imageData = getImageData(image);
+                var canvas = document.createElement('canvas');
+                canvas.width = image.width;
+                canvas.height = image.height;
+                var context = canvas.getContext('2d');
+                context.drawImage(image, 0, 0);
+                var imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+                var hsl = [];
+                var totalH = 0;
+                for(var i=0; i<imageData.length; i+=4) {
+                    var hslVal = rgbToHsl(imageData[i], imageData[i+1], imageData[i+2]);
+                    totalH += hslVal[0]; 
+                    hsl.push(hslVal[0]);
+                }
+                var avgH = 360 * totalH/hsl.length;
+                data.files[0].hue = avgH;
             };
             image.onerror = function () {
                 alert("Please select a valid image file (jpg and png are allowed)");
@@ -56,11 +69,15 @@ $(function () {
         };
     })
 
+    $('#fileupload').bind('fileuploadsubmit', function(e, data) {
+        data.formData = {hue: data.files[0].hue};
+    })
+
     // Load existing files:
     $('#fileupload').addClass('fileupload-processing');
     $.ajax({
         // Uncomment the following to send cross-domain cookies:
-        //xhrFields: {withCredentials: true},
+        // xhrFields: {withCredentials: true},
         url: $('#fileupload').fileupload('option', 'url'),
         dataType: 'json',
         context: $('#fileupload')[0],
@@ -71,19 +88,25 @@ $(function () {
             .call(this, $.Event('done'), {result: result});
     });
 
-    function getImageData(image) {
-        var canvas = document.createElement('canvas');
-        canvas.width = image.width;
-        canvas.height = image.height;
-        var context = canvas.getContext('2d');
-        context.drawImage(image, 0, 0);
-        var imageData = {
-            ctx: context,
-            width: image.width,
-            height: image.height
-        };
-        return imageData;
+    function rgbToHsl(r, g, b) {
+        r /= 255, g /= 255, b /= 255;
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        var h, s, l = (max + min) / 2;
+        if (max == min) {
+            h = s = 0; // achromatic
+        } else {
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        return [ h, s, l ];
     }
+
 });
 
 
