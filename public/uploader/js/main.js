@@ -10,11 +10,13 @@
  */
 
 /* global $, window */
+// adding csrf token to ajax request 
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
 $(function () {
     'use strict';
 
@@ -35,6 +37,7 @@ $(function () {
         )
     );
 
+    // on file add evend listener (calculates avg hue value of an image as soon as uploaded)
     $('#fileupload').bind('fileuploadadd', function (e, data) {
         var reader = new FileReader();
         reader.readAsDataURL(data.files[0]);
@@ -67,11 +70,12 @@ $(function () {
                 alert("Please select a valid image file (jpg and png are allowed)");
             };
         };
-    })
+    });
 
+    // add avgH value to the form data before submit / upload
     $('#fileupload').bind('fileuploadsubmit', function(e, data) {
         data.formData = {hue: data.files[0].hue};
-    })
+    });
 
     // Load existing files:
     $('#fileupload').addClass('fileupload-processing');
@@ -88,6 +92,7 @@ $(function () {
             .call(this, $.Event('done'), {result: result});
     });
 
+    // convert RGB to HSL values
     function rgbToHsl(r, g, b) {
         r /= 255, g /= 255, b /= 255;
         var max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -105,7 +110,7 @@ $(function () {
             h /= 6;
         }
         return [ h, s, l ];
-    }
+    };
 
 });
 

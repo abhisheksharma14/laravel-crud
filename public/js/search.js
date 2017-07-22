@@ -6,7 +6,11 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
+// used to mantain ongoing ajax status
 var currentRequest = null;
+
+// initial search with default values 0,360
 currentRequest = $.ajax({
     type: 'GET',
     data: '',
@@ -91,10 +95,11 @@ popup = {
       $('.popup').remove()
     }, 100);
   }
-}
+};
 
 popup.init();
 
+// render search result
 function renderGallery(images){
     var gallery = $(".content .gallery");
     gallery.html('');
@@ -108,7 +113,7 @@ function renderGallery(images){
         gallery.append(imgHtml);
     }
     popup.init();
-}
+};
 
 
 
