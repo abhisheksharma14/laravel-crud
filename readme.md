@@ -1,2 +1,0 @@
-# laravel-crud
-Laravel CRUD
