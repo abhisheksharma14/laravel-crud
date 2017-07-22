@@ -25,9 +25,9 @@ currentRequest = $.ajax({
 
 $("#scale-slider")
     .slider({
-        max: 100,
+        max: 360,
         min: 0,
-        values: [0, 100],
+        values: [0, 360],
         range: true,
         change: function(event, ui) {
             var values = $("#scale-slider").slider('values');

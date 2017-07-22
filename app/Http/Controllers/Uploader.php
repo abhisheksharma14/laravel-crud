@@ -1103,7 +1103,7 @@ class Uploader extends Controller
             }
             $this->set_additional_file_properties($file);
         }
-        if (isset($file->error)) {
+        if (!isset($file->error)) {
             $this->save_to_database($file->name, $hue);
         }
         return $file;
