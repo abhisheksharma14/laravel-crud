@@ -1,7 +1,11 @@
 $.extend( $.ui.slider.prototype.options, { 
     animate: 300
 });
-
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 var currentRequest = null;
 currentRequest = $.ajax({
     type: 'GET',

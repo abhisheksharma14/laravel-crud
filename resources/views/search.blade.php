@@ -9,6 +9,7 @@
         <link href="{{asset('css/common.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('css/search.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('css/gallery.css')}}" rel="stylesheet" type="text/css">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
         <div class="header">
