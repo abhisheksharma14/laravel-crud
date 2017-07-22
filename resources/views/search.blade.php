@@ -24,12 +24,14 @@
             <div class="search">
                 <div class="hue-slide">
                     <h1>Select Hue Range</h1>
-                    <br><br>
+                    <br>
                     <div id="scale-slider"></div>
                 </div>
             </div>
             <div style="clear: both;"></div>
             <div class="content">
+                <span class="alert"></span>
+                <hr>
                 <div class="gallery"></div>
             </div>
         </div>

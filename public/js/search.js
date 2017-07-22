@@ -6,9 +6,9 @@ var currentRequest = null;
 currentRequest = $.ajax({
     type: 'GET',
     data: '',
-    url: '/search/hue/0/100',
+    url: '/search/hue/0/360',
     dataType: 'json',
-    beforeSend : function()    {           
+    beforeSend : function() {
         if(currentRequest != null) {
             currentRequest.abort();
         }
@@ -94,6 +94,7 @@ popup.init();
 function renderGallery(images){
     var gallery = $(".content .gallery");
     gallery.html('');
+    $(".content span.alert").html(images.length+" Images Found");
     for (var i = images.length - 1; i >= 0; i--) {
         var img = images[i];
         console.log(img.image);

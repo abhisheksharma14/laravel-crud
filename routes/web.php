@@ -17,12 +17,10 @@ Route::get('/', function () {
 
 Route::get('/upload', 'Uploader@view');
 
-Route::get('/uploadImage', 'Uploader@initialize');
-Route::post('/uploadImage', 'Uploader@initialize');
-Route::options('/uploadImage', 'Uploader@initialize');
-Route::patch('/uploadImage', 'Uploader@initialize');
-Route::put('/uploadImage', 'Uploader@initialize');
-Route::delete('/uploadImage', 'Uploader@initialize');
+Route::get('/uploadImage', 'Uploader@index');
+Route::post('/uploadImage', 'Uploader@index');
+Route::patch('/uploadImage', 'Uploader@index');
+Route::put('/uploadImage', 'Uploader@index');
 // Route::head('/uploadImage', 'Uploader@initialize');
 
 Route::get('/search', 'Search@index');

@@ -9,7 +9,7 @@ class Uploader extends Controller
 {
     public function index()
     {
-    	echo "here";
+    	//Things are handelled by constructor
     }
 
     protected $options;
@@ -183,9 +183,6 @@ class Uploader extends Controller
             case 'PUT':
             case 'POST':
                 return $this->post($this->options['print_response']);
-                break;
-            case 'DELETE':
-                return $this->delete($this->options['print_response']);
                 break;
             default:
                 return $this->header('HTTP/1.1 405 Method Not Allowed');
@@ -1310,9 +1307,6 @@ class Uploader extends Controller
     }
 
     public function post($print_response = true) {
-        if ($this->get_query_param('_method') === 'DELETE') {
-            return $this->delete($print_response);
-        }
         $upload = $this->get_upload_data($this->options['param_name']);
         // Parse the Content-Disposition header, if available:
         $content_disposition_header = $this->get_server_var('HTTP_CONTENT_DISPOSITION');
@@ -1366,30 +1360,6 @@ class Uploader extends Controller
             }
         }
         $response = array($this->options['param_name'] => $files);
-        return $this->generate_response($response, $print_response);
-    }
-
-    public function delete($print_response = true) {
-        $file_names = $this->get_file_names_params();
-        if (empty($file_names)) {
-            $file_names = array($this->get_file_name_param());
-        }
-        $response = array();
-        foreach ($file_names as $file_name) {
-            $file_path = $this->get_upload_path($file_name);
-            $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
-            if ($success) {
-                foreach ($this->options['image_versions'] as $version => $options) {
-                    if (!empty($version)) {
-                        $file = $this->get_upload_path($file_name, $version);
-                        if (is_file($file)) {
-                            unlink($file);
-                        }
-                    }
-                }
-            }
-            $response[$file_name] = $success;
-        }
         return $this->generate_response($response, $print_response);
     }
 
