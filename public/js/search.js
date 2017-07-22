@@ -101,7 +101,6 @@ function renderGallery(images){
     $(".content span.alert").html(images.length+" Images Found");
     for (var i = images.length - 1; i >= 0; i--) {
         var img = images[i];
-        console.log(img.image);
         var imgHtml = '<figure>\
                             <img src="/images/'+img.image+'" alt="" />\
                             <figcaption>Caption: <small>HUE: '+img.hue+'</small></figcaption>\

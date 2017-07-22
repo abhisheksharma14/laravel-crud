@@ -2,7 +2,7 @@
 Laravel based application for image uploading. It calculates the hue value of and image uploaded and than save the data to database. User can search uploaded images in a particular hue range selected by the user.
 # Prerequisites:
 -   composer
--   php-mbstring php-dom   (```sudo apt-get install php-mbstring php-dom```)
+-   php-mbstring php-dom php7.0-gd  (```sudo apt-get install php-mbstring php-dom php7.0-gd```)
 -   mysql
 
 # Installation:
